@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
-let datas =[
+let datass =[
     {
         sno:0,
         name:"Tarun sir",
@@ -82,18 +82,21 @@ let datas =[
 
 const AddEmploy = () => {
 
+    const [datas,setDatas] = useState(datass)
     const [istrue,SetIsTrue] = useState(true);
     const [name,setName] = useState("");
     const [positon,setpositon] =useState("");
-    const [editing,sestEditing] =useState(null);
+    const [editing,setEditing] =useState(null);
     const [search ,setsearch] =useState("");
-    const [currentPage,sestCurrnetPage] = useState(1);
-    const [totalItems,setTotalItems] = useState(5)
+    const [currentPage,setCurrnetPage] = useState(1);
+    const [startEnd,setStartEnd] = useState({
+        start:4*(currentPage-1),
+        end: 4* currentPage
+    })
   
 
     const [data,setData] = useState(datas);
 
-    // const [newdata,setNewdata]= useState(datas);
 
     const addEmploye=(e)=>{
         e.preventDefault();
@@ -141,9 +144,39 @@ const AddEmploy = () => {
     const handeleChange=(toDo)=>{
         console.log(toDo)
 
+        setCurrnetPage(toDo)
+    }
 
+
+    const handleDelete =(id)=>{
+         
+        console.log("delete",id)
+        const newData = datas.filter((ele)=>ele.sno !=id);
+        setDatas(newData);
+
+        console.log(newData)
+
+        const updatedData = data.filter((ele)=>ele.sno != id);
+
+        setData(updatedData);
+
+        
 
     }
+
+
+
+    useEffect(()=>{
+ 
+        setStartEnd({
+            start:4*(currentPage-1),
+            end: 4* currentPage
+        })
+
+
+    },[currentPage])
+
+    console.log(startEnd["end"],startEnd["start"])
 
 
 
@@ -224,7 +257,7 @@ const AddEmploy = () => {
                             <tbody>
 
                                 {
-                                    data.slice(0,3).map((ele,index)=>{
+                                    data.slice(startEnd["start"],startEnd["end"]).map((ele,index)=>{
                                         return(
                             <tr key={index} className='border-collapse border-none  rounded-t-2xl'>
                                     <th className='text-left border-collapse border-b-[1px] border-gray-900    merriweather text-sm font-light text-gray-600' 
@@ -249,15 +282,17 @@ const AddEmploy = () => {
                                         
                                             {
                                                ele.sno === editing ?  <button className='bg-blue-600 text-white hover:text-black rounded-2xl cursor-pointer'
-                                                 onClick={(e)=>sestEditing(null)}
+                                                 onClick={(e)=>setEditing(null)}
                                                  style={{padding:"4px 13px",marginInline:"10px"}}>
                                                      cancle</button>:
                                                      <button className='bg-yellow-600 hover:text-white rounded-2xl cursor-pointer'
-                                        onClick={(e)=>sestEditing(ele.sno)}
+                                        onClick={(e)=>setEditing(ele.sno)}
                                         style={{padding:"4px 13px",marginInline:"10px"}}>
                                             edit</button>
                                             }
-                                        <button className='bg-red-600 hover:text-white rounded-2xl cursor-pointer' 
+                                        <button 
+                                        onClick={(e)=>handleDelete(ele.sno)}
+                                        className='bg-red-600 hover:text-white rounded-2xl cursor-pointer' 
                                         style={{padding:"4px 13px",marginInline:"10px"}}>
                                             delet</button>
                                         {
@@ -280,28 +315,44 @@ const AddEmploy = () => {
                             </tbody>
                         </table>
                         
-                        <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
-                          <button
-                          onClick={()=>handeleChange(1)}
-                          className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"8px 10px"}}>
-                          <FaAngleDoubleLeft/>
-                          </button>
-                          <button className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
-                            1
-                          </button>
-                          <button className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
-                            2
-                          </button>
-                          <button className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
-                            3
-                          </button>
-                          <button
-                          onClick={()=>handeleChange(data.length/totalItems)}
-                          className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500 ' style={{padding:"8px 10px"}}>
-                            <FaAngleDoubleRight/>
-                          </button>
+                     {   data.length > 4 && <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
+                         {
+                           currentPage >1 &&<>  <button
+                             onClick={()=>handeleChange(1)}
+                             className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"8px 10px"}}>
+                             <FaAngleDoubleLeft/>
+                             </button>
+                              <button 
+                              onClick={(e)=>handeleChange(currentPage-1)}
+                             className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
+                               prev
+                             </button>
+                             </>
+                             
+                            
+                         }
+                         
+                         
+                        
+                        {
+                           Math.ceil(data.length/4)>currentPage && <> 
+                           
+                           <button
+                          onClick={(e)=>handeleChange(currentPage+1)}
+                          className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
+                            next
+                          </button> <button
+                              onClick={(e)=>handeleChange(Math.ceil(data.length/4))}
+                              className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500 ' style={{padding:"8px 10px"}}>
+                                <FaAngleDoubleRight/>
+                              
+                              </button>
+
+                              </>
+                        }
 
                         </div>
+                        }
 
 
                     </div>

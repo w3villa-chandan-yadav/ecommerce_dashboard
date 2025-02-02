@@ -4,7 +4,10 @@ import ExperienceForm from '../SeveralForm/ExperienceForm';
 
 const Forms = () => {
 
-    const [active,sestACtive] = useState(0);
+    const [active,sestACtive] = useState("Employee");
+
+
+    console.log(active)
 
   return (
     <div className='w-full h-fit max-w-[1120px] ' style={{padding:"50px 0px"}}>
@@ -15,20 +18,26 @@ const Forms = () => {
             <div className='flex items-center'>
             <h3 className='text-left merriweather font-bold text-xl  flex-[0.4]'>Please select a form</h3>
                <select
+                 onChange={(e) => sestACtive(e.target.value)} 
                className='flex-1 outline-none border-[2px] border-gray-300 rounded-2xl'
                style={{padding:"10px 19px "}} 
                name="cars" id="cars">
                 <option  disabled selected value="volvo">Choose one form below ....</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                <option 
+                value="Employee">AddEmploye</option>
+                <option
+                value="Reviews">Reviews</option>
                 </select>
 
             </div>
 
         </div>
-        <AddEmploy/>  
-        {/* <ExperienceForm/> */}
+
+        {
+          active === "Employee" ? 
+           <AddEmploy/>  :
+        <ExperienceForm/>
+        }
 
     </div>
   )
