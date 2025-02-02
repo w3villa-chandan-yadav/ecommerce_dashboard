@@ -6,7 +6,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* background-color: ; */
 }
 
 .merriweather-light {
@@ -36,6 +35,10 @@
 .nosifer-bold{
   font-family: "Nosifer",serif;
 
+}
+
+.merriweather{
+  font-family: "kanit",serif;
 }
 
 .custom-height {
