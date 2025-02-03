@@ -36,14 +36,14 @@ const dashboard = [
   { id: 7, istrue: true, isNavigate: false, name: "task", icon: <MdTask />, subDrop: ["New  task", "old Task"] },
 ]
 const heading = [
-  { id: 7, istrue: true, isNavigate: false, name: "Auth Pages", icon: <IoPeopleSharp />, subDrop: ["Autherisation", "Get Authorize"] },
-  { id: 8, istrue: true, isNavigate: false, name: "Extra Page", icon: <BsBoxSeamFill />, subDrop: ["Add Pages", "Add files"] },
-  { id: 9, istrue: false, isNavigate: true, name: "Layout", icon: <AiFillLayout /> },
+  { id: 8, istrue: true, isNavigate: false, name: "Auth Pages", icon: <IoPeopleSharp />, subDrop: ["Autherisation", "Get Authorize"] },
+  { id: 9, istrue: true, isNavigate: false, name: "Extra Page", icon: <BsBoxSeamFill />, subDrop: ["Add Pages", "Add files"] },
+  { id: 10, istrue: false, isNavigate: true, name: "Layout", icon: <AiFillLayout /> },
 ]
 const setting = [
-  { id: 10, istrue: true, isNavigate: false, name: "Support", icon: <MdContactSupport />, subDrop: ["Technical support", "Call Us"] },
-  { id: 11, istrue: false, isNavigate: false, name: "Setting", icon: <RiSettingsFill /> },
-  { id: 12, istrue: false, isNavigate: true, name: "Logout", icon: <RiLogoutCircleRFill /> },
+  { id: 11, istrue: true, isNavigate: false, name: "Support", icon: <MdContactSupport />, subDrop: ["Technical support", "Call Us"] },
+  { id: 12, istrue: false, isNavigate: false, name: "Setting", icon: <RiSettingsFill /> },
+  { id: 13, istrue: false, isNavigate: true, name: "Logout", icon: <RiLogoutCircleRFill /> },
 ]
 const Main = () => {
   const [inputs, setInput] = useState("");
