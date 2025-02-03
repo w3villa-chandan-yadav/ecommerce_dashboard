@@ -207,7 +207,7 @@ const AddEmploy = () => {
                 <input type='text' placeholder='Degination/Name'
                 value={search}
                 onChange={handelSearch}
-                className='border-[1px] border-gray-500 w-[40%] outline-none rounded-sm'
+                className='border-[1px] border-gray-500 w-[80%] lg:w-[40%] outline-none rounded-sm'
                 style={{padding:"6px 5px"}}
                 />
             </div> :
@@ -244,13 +244,13 @@ const AddEmploy = () => {
                         <table className='w-full text-center table-fixed'>
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
                                 <tr className='border-collapse border-none  rounded-t-2xl'>
-                                    <th className='text-left border-collapse border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xl font-semibold text-gray-300' 
-                                    style={{padding:"10px 5px"}}>Index</th>
-                                    <th className='text-left border-collapse  border-b-[1px] border-gray-300  bg-gray-500 merriweather text-xl font-semibold text-gray-300' 
+                                    <th className='text-left border-collapse  w-[40%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-xl font-semibold text-gray-300' 
+                                    style={{padding:"10px 5px"}}>S-NO.</th>
+                                    <th className='text-left border-collapse w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-xl font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>Name</th>
-                                    <th className='text-left border- border-b-[1px] border-gray-300  bg-gray-500  merriweather text-xl font-semibold text-gray-300'
+                                    <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-xl font-semibold text-gray-300'
                                     style={{padding:"10px 5px"}}>Position</th>
-                                    <th className='last:rounded-tr-2xl bg-gray-500 text-center  border-b-[1px] border-gray-300 '>
+                                    <th className='last:rounded-tr-2xl w-[100%] bg-amber-300 md:text-xl text-sm text-center  border-b-[1px] border-gray-300 '>
                                         Action</th>
                                 </tr>
                             </thead>
@@ -278,32 +278,38 @@ const AddEmploy = () => {
                                         value={ele?.positoin} className='w-full outline-none'/>
                                         
                                         </th>
-                                    <th className=' border-b-[1px] w-[24%]   border-gray-900 text-gray-600 text-center text-sm '>
-                                        
+                                    <th className=' border-b-[1px] w-[100%] md:block  border-gray-900 text-gray-600 text-center text-sm '>
+                                        <div className=' h-full flex md:flex-row justify-center flex-col gap-2' style={{padding:"9px 2px"}}>
                                             {
-                                               ele.sno === editing ?  <button className='bg-blue-600 text-white hover:text-black rounded-2xl cursor-pointer'
+                                               ele.sno === editing ?  
+                                               <button className='bg-blue-600 w-full   text-white hover:text-black text-[10px] lg:text-sm   rounded-2xl cursor-pointer'
                                                  onClick={(e)=>setEditing(null)}
-                                                 style={{padding:"4px 13px",marginInline:"10px"}}>
+                                                 style={{padding:"2px 9px"}}>
                                                      cancle</button>:
-                                                     <button className='bg-yellow-600 hover:text-white rounded-2xl cursor-pointer'
+                                                     <button className='bg-yellow-600 w-full text-xs lg:text-sm  hover:text-white rounded-2xl cursor-pointer'
                                         onClick={(e)=>setEditing(ele.sno)}
-                                        style={{padding:"4px 13px",marginInline:"10px"}}>
+                                        style={{padding:"4px 13px"}}>
                                             edit</button>
                                             }
-                                        <button 
+
+                                      {
+                                        ele.sno !=editing  &&  <button className='bg-red-600 text-xs w-full lg:text-sm  hover:text-white rounded-2xl cursor-pointer'
                                         onClick={(e)=>handleDelete(ele.sno)}
-                                        className='bg-red-600 hover:text-white rounded-2xl cursor-pointer' 
-                                        style={{padding:"4px 13px",marginInline:"10px"}}>
+                                        style={{padding:"4px 13px"}}>
                                             delet</button>
+
+                                      }
+
+                                       
                                         {
                                             editing === ele.sno && (
-                                                <button className='bg-green-600 hover:text-white rounded-2xl cursor-pointer' 
-                                        style={{padding:"4px 13px",marginInline:"10px"}}>
+                                                <button className='bg-green-600 w-full   text-white hover:text-black text-[10px] lg:text-sm   rounded-2xl cursor-pointer'
+                                                style={{padding:"4px 13px"}}>
                                             save</button>
                                             )
                                         }
 
-                                        
+                                        </div>
                                         </th>
                                 </tr>
 
