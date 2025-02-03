@@ -91,6 +91,8 @@ const handleClick =(e)=>{
  alert("Developement is in progress")
 }
 
+console.log(window.innerWidth)
+
   return (
     <div className=' w-[97%] h-[99%]  mx-auto custom-paddinginner'>
 
@@ -175,7 +177,7 @@ const handleClick =(e)=>{
                   }}
                   options={{
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     scales: {
                       // x: {
                       //   ticks: {
@@ -230,7 +232,7 @@ const handleClick =(e)=>{
             {
                 label:"Revenue",
                 data:indexs.gain,
-                barThickness:12,
+                // barThickness:12,
                 backgroundColor: function (context) {
                   const chart = context.chart;
                   const ctx = chart.ctx;
@@ -239,10 +241,38 @@ const handleClick =(e)=>{
                   gradient.addColorStop(1, 'red');
                   return gradient;
                 },
-                borderRadius:5
+                borderRadius:5,
+                barThickness:`${(() => {
+                
+                
+                  const newWidth = window.innerWidth;
+                
+                  if (newWidth < 790 && newWidth > 600) {
+                    return 6
+                  } else if(newWidth < 400) {
+                    // console.log("inside bar thickness")
+                    return 7
+                  }else{
+                    return 12
+                  }
+})()}`,
               },{
                 label:"lose",
-                barThickness:12,
+                // barThickness:12,
+                barThickness:`${(() => {
+                
+                
+                  const newWidth = window.innerWidth;
+                
+                  if (newWidth < 790 && newWidth > 600) {
+                    return 6
+                  } else if(newWidth < 400) {
+                    // console.log("inside bar thickness")
+                    return 7
+                  }else{
+                    return 12
+                  }
+})()}`,
 
               
                 data:indexs.loos,
