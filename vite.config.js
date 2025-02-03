@@ -9,4 +9,10 @@ export default defineConfig({
     tailwindcss(),
 
   ],
-})
+  // theme:{
+  //   screens: {
+  //     'xxs': '540px', // min-width
+  //   },
+  // }
+}
+)

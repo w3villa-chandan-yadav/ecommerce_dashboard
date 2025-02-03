@@ -97,21 +97,19 @@ const handleClick =(e)=>{
     <div className='w-full h-full relative'>
       <div className='text-gray-700 merriweather-bold '>
         <h3>Dashboards {"->"} Overwive</h3>
-
       </div>
-        <div className='w-full  grid grid-cols-4 custom-margin  gap-[10px] '>
-
-
+        <div className='w-full  grid  grid-cols-1 sm:grid-cols-2   lg:grid-cols-4 custom-margin  gap-[10px] '>
               {
                 data.map((item,index)=>{
                   return(
-          <div key={index} className='bg-whitee w-full h-[130px] rounded-2xl custom-padding'>
+          <div key={index} className='bg-whitee w-full flex flex-col justify-between   rounded-2xl custom-padding' style={{paddingBottom:"17px"}}>
             <div className='flex justify-between items-center'>
             <h3 className='merriweather-bold font-[500] text-gray-700'>{item.heading}</h3><span className='relative group hover:bg-gray-300 rounded-full h-[20px] cursor-pointer w-[20px] grid place-items-center'><IoMdMore /> 
              <div className=' absolute bg-gray-300 right-0 top-[38%] rounded-2xl text-center  w-[140px] flex-col  z-30  hidden group-hover:flex ' style={{padding:"10px 4px"}}>
               {
-                item.hoverTile.map((ele,index)=>{
+                item.hoverTile.map((ele,indexx)=>{
                   return <Link
+                  key={indexx}
                   onClick={handleClick}
                    className='hover:bg-gray-500 bg-gray-200 rounded-2xl' style={{padding:"10px 5px",margin:"5px 0px"}}>
                     {ele}
@@ -132,7 +130,7 @@ const handleClick =(e)=>{
                   <IoMdStopwatch/> {item.timt}
               </div>
            
-           <div>
+           <div className=''>
               <div className='relative w-8 h-8 rounded-full  '>
                   <img src={"https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"} className='w-full h-full  object-cover rounded-full'/>
                   <img src={"https://www.shutterstock.com/shutterstock/photos/2151833739/display_1500/stock-photo-portrait-of-a-young-latin-woman-with-pleasant-smile-and-crossed-arms-isolated-on-grey-wall-with-2151833739.jpg"} className='absolute -left-[18px] top-2 w-full h-full  object-cover rounded-full'/>
@@ -160,22 +158,19 @@ const handleClick =(e)=>{
 
 
         </div>
-
-        <div className='w-full  grid grid-cols-3  gap-[10px]'>
+        <div className='w-full   grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[10px]'>
           <div className='bg-whitee merriweather-regular text-sm  text-gray-700 font-semibold w-full h-[290px] rounded-3xl custom-padding'>
            Monthly Target
            <div className='w-full flex justify-center h-[230px] '>
               <Doughnut
                   data={{
-                    // labels:["Jan","Feb"],  
-                    label:"hidden",
+                    labels:["Profit","loss","Maintane"],  
+                    // label:"hidden",
                     datasets:[{
                       label:"Revenue",
                       data:[400,800,1200],
                       borderRadius:5
-                    },
-                  
-                  
+                    },                  
                   ]
                   }}
                   options={{
@@ -190,10 +185,15 @@ const handleClick =(e)=>{
                     },
                     plugins: {
                       legend: {
-                        display: false,  // Hides the legend
+                        display: true,  // Hides the legend
+                        position:"bottom"
+                        
                       },
                       tooltip: {
                         enabled: false,  // Hides tooltips
+                        // style:{
+                          
+                        // }
                       }
                     }
                   }}
@@ -201,7 +201,7 @@ const handleClick =(e)=>{
            </div>
           </div>
             
-          <div className='bg-whitee col-span-2 w-full h-[290px] rounded-3xl merriweather-regular text-sm font-semibold custom-padding ' >
+          <div className='bg-whitee lg:col-span-2 overflow-hidden w-full h-[290px] rounded-3xl merriweather-regular text-sm font-semibold custom-padding ' style={{paddingBottom:"10px"}} >
          <div className='flex justify-between items-center ' style={{margin:"3px 0px"}}>
           <p className='text-gray-700'> Monthly Target</p>
           <div className='flex gap-3'>
@@ -216,7 +216,7 @@ const handleClick =(e)=>{
             }
           </div>
          </div>
-           <div className='w-full flex justify-center h-[230px] '>
+           <div className='w-full flex justify-center h-[210px] lg:h-[230px] '>
             
              <Bar
             
@@ -268,8 +268,9 @@ const handleClick =(e)=>{
                   display: false,  
                 },
                 tooltip: {
-                  enabled: false,  
+                  enabled: true,  
                 }
+               
               }
             }}
              />
@@ -448,10 +449,12 @@ const handleClick =(e)=>{
     // cutout: '60%',
     plugins: {
       legend: {
-        display: false,  // Hides the legend
+        display: true,  // Hides the legend
+        position:"bottom",
+        // backgroundColor:"red"  
       },
       tooltip: {
-        enabled: false,  // Hides tooltips
+        enabled: true,  // Hides tooltips
       },
       elements: {
         arc: {

@@ -19,7 +19,6 @@ function App() {
   <Route index element={<Change/>}/>
   <Route path='/:name' element={<Calander/>} />
   <Route path='/indexs/:id' element={<Forms/>}/>
-
   </Route>
  </Routes>
   </>
