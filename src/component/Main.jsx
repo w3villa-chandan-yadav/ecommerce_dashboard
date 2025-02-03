@@ -27,7 +27,7 @@ import { IoCloseSharp } from "react-icons/io5";
 
 const dashboard = [
   { id: 0, istrue: false, isNavigate: true, name: "Overview", icon: <PiSquaresFourFill /> },
-  { id: 1, istrue: true, isNavigate: false, name: "Forms", icon: <SiFormstack />, subDrop: ["form1", "form2"] },
+  { id: 1, istrue: true, isNavigate: false, name: "Forms", icon: <SiFormstack />, subDrop: ["Company", "User"] },
   { id: 2, istrue: false, isNavigate: true, name: "Calender", icon: <BsCalendar2EventFill /> },
   { id: 3, istrue: false, isNavigate: true, name: "Tickets", icon: <HiMiniTicket /> },
   { id: 4, istrue: false, isNavigate: true, name: "File Manager", icon: <FaFolderOpen /> },

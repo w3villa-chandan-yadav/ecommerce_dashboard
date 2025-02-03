@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { BsEmojiGrinFill } from "react-icons/bs";
 import { BsEmojiExpressionlessFill } from "react-icons/bs";
 import { BsEmojiFrownFill } from "react-icons/bs";
-import { HiEmojiHappy } from "react-icons/hi";
 
 
 const ExperienceForm = () => {
-  const [activeEMoj,setActiveEmoj] = useState(null);
+  const [activeEMoj,setActiveEmoj] = useState(0);
   const [text,setText] = useState("")
   return (
     <section className='w-full ' style={{padding:"15px 0px"}} >
@@ -17,8 +16,8 @@ const ExperienceForm = () => {
                   <div className='flex justify-between items-center max-h-[200px] h-full overflow-  '>
                     <div className='flex flex-1 flex-col items-center  gap-1 md:gap-4 h-full '>
                       <BsEmojiGrinFill
-                      onClick={()=>setActiveEmoj(0)}
-                      className={`text-xl ${activeEMoj === 0 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
+                      onClick={()=>setActiveEmoj(1)}
+                      className={`text-xl ${activeEMoj === 1 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
                     <p>happy </p>
                     </div>
 
@@ -27,16 +26,16 @@ const ExperienceForm = () => {
                     <div 
                     className='flex flex-1 flex-col items-center  gap-1 md:gap-4 h-full'>
                       <BsEmojiExpressionlessFill 
-                      onClick={()=>setActiveEmoj(1)}
-                      className={`text-xl ${activeEMoj === 1 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
+                      onClick={()=>setActiveEmoj(2)}
+                      className={`text-xl ${activeEMoj === 2 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
                       sad
                     </div>
 
                     <div
                      className='flex flex-1 flex-col items-center  gap-1 md:gap-4 h-full '>
                       <BsEmojiFrownFill 
-                     onClick={()=>setActiveEmoj(2)}
-                     className={`text-xl ${activeEMoj === 2 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
+                     onClick={()=>setActiveEmoj(3)}
+                     className={`text-xl ${activeEMoj === 3 && "text-orange-500"} md:text-3xl lg:text-8xl hover:text-gray-700 cursor-pointer`}/>
                         disgusting
                     </div>
                   </div>
@@ -48,12 +47,15 @@ const ExperienceForm = () => {
                 onKeyDown={(e)=>{
                          if(e.key === "Enter" && e.target.value.trim() != ""){
                           // console.log("enter enter")
-                          if(activeEMoj >= 0){
+                          if(!activeEMoj){
+
                             alert("please select a emote")
                             return
                           }
 
-                          alert('Review submited')
+                          alert('Review submited Thanks')
+                          setText("")
+                          setActiveEmoj(0)
                           return ;
                          }
  

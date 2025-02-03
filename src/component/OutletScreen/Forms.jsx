@@ -22,7 +22,7 @@ const Forms = () => {
                className=' w-[100%]  outline-none border-[2px] border-gray-300 rounded-2xl'
                style={{padding:"10px 19px "}} 
                name="cars" id="cars">
-                <option  disabled selected value="volvo">Choose one form below ....</option>
+                <option  disabled defaultValue={"volvo"} >Choose one form below ....</option>
                 <option 
                 value="Employee">AddEmploye</option>
                 <option
