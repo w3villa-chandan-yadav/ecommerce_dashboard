@@ -22,9 +22,13 @@ function App() {
   <Route path='/indexs/Company' element={<Forms/>}/>
   <Route path='/indexs/User' element={<Login/>}/>
   <Route path='/indexs/:name' element={<Calander/>}/>
-
-
   </Route>
+
+  <Route path='/logni' element={<Login/>}/>
+    
+
+ 
+
  </Routes>
   </>
   )

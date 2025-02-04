@@ -94,7 +94,7 @@ const handleClick =(e)=>{
 console.log(window.innerWidth)
 
   return (
-    <div className=' w-[97%] h-[99%]  mx-auto custom-paddinginner'>
+    <div className=' w-[97%] h-[99%] max-w-[1300px]   mx-auto custom-paddinginner'>
 
     <div className='w-full h-full relative'>
       <div className='text-gray-700 merriweather-bold '>

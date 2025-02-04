@@ -65,7 +65,7 @@ const Main = () => {
 
 
   return (
-    <div className='flex justify-center items-center max-w-[1300px]  w-screen h-screen overflow-hidden mx-auto' >
+    <div className='flex justify-center items-center  w-screen h-screen overflow-hidden mx-auto' >
       <div className=' hidden sm:block w-[200px] md:w-[244px] bg-zinc-900 h-screen'>
         <div className='nosifer-bold text-3xl text-white' style={{ paddingTop: "20px", marginLeft: "10px", paddingBottom: "6px" }}>
           panze
@@ -82,7 +82,7 @@ const Main = () => {
 
 
       {/* this is the toggled menu */}
-      <div className={` absolute z-50 top-[50px] ${toggle ? "left-0":"left-[-100%]" } transition-all ease-in-out duration-300 sm:hidden w-[244px] bg-zinc-900 h-screen`}>
+      <div className={` absolute sm:relative z-50 top-[50px] ${toggle ? "left-0":"left-[-100%]" } transition-all ease-in-out duration-300 sm:hidden w-[244px] bg-zinc-900 h-screen`}>
         <div className='nosifer-bold text-3xl text-white' style={{ paddingTop: "20px", marginLeft: "10px", paddingBottom: "6px" }}>
           panze
         </div>
@@ -144,7 +144,7 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <div className='w-full flex justify-center  custom-height bg-zinc-200 overflow-y-scroll  '>
+        <div className='w-full flex justify-center   custom-height bg-zinc-200 overflow-y-scroll  '>
             <Outlet />
         </div>
       </div>

@@ -79,6 +79,9 @@ let datass =[
  ]
 
 
+ let timer = null;
+
+
 
 const AddEmploy = () => {
 
@@ -122,22 +125,44 @@ const AddEmploy = () => {
 
     }
 
+
+
+
+
+
+
+       /// Debouncing is applyied in the searching section
+
     const handelSearch =(e)=>{
 
         setsearch(e.target.value)
 
-        const newData = datas.filter((ele,indexx)=> {
+        if(timer){
+            clearTimeout(timer)
+        }
+
+         timer = setTimeout(()=>{
+
+            console.log("searching")
+
             
+            
+            
+            
+            
+            const newData = datas.filter((ele,indexx)=> {
+                
                 if(ele.name.includes(e.target.value) || ele.positoin.includes(e.target.value)){
                     console.log("finding")
                     return true
                 }
+                
+            })
             
-        })
-
-        console.log(newData)
-        setData(newData)
-
+            console.log(newData)
+            setData(newData)
+            
+        },400)
     }
 
 
@@ -250,7 +275,7 @@ const AddEmploy = () => {
                                     style={{padding:"10px 5px"}}>Name</th>
                                     <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-xl font-semibold text-gray-300'
                                     style={{padding:"10px 5px"}}>Position</th>
-                                    <th className='last:rounded-tr-2xl w-[100%] bg-amber-300 md:text-xl text-sm text-center  border-b-[1px] border-gray-300 '>
+                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xl text-sm text-center  border-b-[1px] border-gray-300 '>
                                         Action</th>
                                 </tr>
                             </thead>

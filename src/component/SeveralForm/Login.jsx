@@ -2,7 +2,6 @@ import React from 'react'
 
 const Login = () => {
 
-    debugger
   return (
     <div className='w-[90%]  h-[90%] mx-auto grid place-items-center'>
         <div className='bg-gray-300 rounded-3xl gap-8 flex flex-col items-center justify-center' style={{padding:"20px"}}>
