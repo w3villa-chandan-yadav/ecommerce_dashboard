@@ -236,7 +236,7 @@ const AddEmploy = () => {
                 style={{padding:"6px 5px"}}
                 />
             </div> :
-                <form onSubmit={addEmploye}>
+                <form onSubmit={addEmploye}  name='addEmployeeform'>
                     <div className='flex gap-3 relative '>
                     <input
                     value={name}
@@ -275,7 +275,7 @@ const AddEmploy = () => {
                                     style={{padding:"10px 5px"}}>Name</th>
                                     <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-xl font-semibold text-gray-300'
                                     style={{padding:"10px 5px"}}>Position</th>
-                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xl text-sm text-center  border-b-[1px] border-gray-300 '>
+                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xl text-sm text-center bg-gray-500  border-b-[1px] border-gray-300 '>
                                         Action</th>
                                 </tr>
                             </thead>

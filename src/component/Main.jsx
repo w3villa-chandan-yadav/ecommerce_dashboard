@@ -42,7 +42,7 @@ const heading = [
 ]
 const setting = [
   { id: 11, istrue: true, isNavigate: false, name: "Support", icon: <MdContactSupport />, subDrop: ["Technical support", "Call Us"] },
-  { id: 12, istrue: false, isNavigate: false, name: "Setting", icon: <RiSettingsFill /> },
+  { id: 12, istrue: false, isNavigate: true, name: "Setting", icon: <RiSettingsFill /> },
   { id: 13, istrue: false, isNavigate: true, name: "Logout", icon: <RiLogoutCircleRFill /> },
 ]
 const Main = () => {

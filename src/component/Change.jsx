@@ -91,7 +91,7 @@ const handleClick =(e)=>{
  alert("Developement is in progress")
 }
 
-console.log(window.innerWidth)
+// console.log(window.innerWidth)
 
   return (
     <div className=' w-[97%] h-[99%] max-w-[1300px]   mx-auto custom-paddinginner'>
@@ -392,7 +392,7 @@ console.log(window.innerWidth)
           </div>
 
          
-          <div className='w-full bg-whitee  merriweather-regular text-sm font-semibold rounded-3xl custom-padding'>
+          <div className='w-full bg-whitee h-[300px]  md:h-full merriweather-regular text-sm font-semibold rounded-3xl custom-padding'>
             <div className='flex justify-between items-center ' style={{marginBottom:"13px"}}>           
                <h3 className='text-gray-700'>Project Summary</h3>
                <IoMdMore className='font-bold  text-xl rounded-full cursor-pointer hover:bg-gray-300'/> 
