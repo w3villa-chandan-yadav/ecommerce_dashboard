@@ -96,20 +96,28 @@ const AddEmploy = () => {
         start:4*(currentPage-1),
         end: 4* currentPage
     })
-  
-
     const [data,setData] = useState(datas);
+
+    const [inputName, setInputName] = useState("");
+
+    const [inputPositon,setinputPosition] = useState("");
+
+
+
+
+
+
+
+
 
 
     const addEmploye=(e)=>{
         e.preventDefault();
         // console.log(data)
-
         if(name.length <3 || positon.length <5 ){
             alert("please fill correct details")
             return
         }
-
         const newdataIs ={sno:data.at(-1).sno+1,
             name:name,
             positoin:positon
@@ -126,11 +134,6 @@ const AddEmploy = () => {
     }
 
 
-
-
-
-
-
        /// Debouncing is applyied in the searching section
 
     const handelSearch =(e)=>{
@@ -143,23 +146,22 @@ const AddEmploy = () => {
 
          timer = setTimeout(()=>{
 
-            console.log("searching")
+            // console.log("searching")
 
-            
-            
-            
-            
-            
             const newData = datas.filter((ele,indexx)=> {
                 
-                if(ele.name.includes(e.target.value) || ele.positoin.includes(e.target.value)){
-                    console.log("finding")
+                if(ele.name.toLowerCase().includes(e.target.value.trim().toLowerCase()) || ele.positoin.toLowerCase().includes(e.target.value.trim().toLowerCase())){
+                    // console.log("finding")
                     return true
                 }
                 
             })
             
-            console.log(newData)
+            // console.log(newData)
+            if(currentPage !== 1){
+
+                setCurrnetPage(1)
+            }
             setData(newData)
             
         },400)
@@ -167,7 +169,7 @@ const AddEmploy = () => {
 
 
     const handeleChange=(toDo)=>{
-        console.log(toDo)
+        // console.log(toDo)
 
         setCurrnetPage(toDo)
     }
@@ -175,17 +177,51 @@ const AddEmploy = () => {
 
     const handleDelete =(id)=>{
          
-        console.log("delete",id)
+        // console.log("delete",id)
         const newData = datas.filter((ele)=>ele.sno !=id);
         setDatas(newData);
 
-        console.log(newData)
+        // console.log(newData)
 
         const updatedData = data.filter((ele)=>ele.sno != id);
 
         setData(updatedData);
 
         
+
+    }
+
+    const handleEditing =(id)=>{
+     const editable =   datass.find((ele)=>ele.sno === id);
+
+     setEditing(id)
+     setInputName(editable.name)
+     setinputPosition(editable.positoin)
+
+    //  console.log(editable);
+
+    }
+
+    const handleUpdate =(e)=>{
+        e.preventDefault();
+
+        // const index = editing-1;
+
+        // console.log("editing", index, editing)
+
+        console.log(datas[editing])
+
+        datas[editing].name =inputName;
+
+        datas[editing].positoin = inputPositon;
+
+        setDatas([...datas])
+
+        setEditing(null)
+
+
+    
+
 
     }
 
@@ -201,8 +237,11 @@ const AddEmploy = () => {
 
     },[currentPage])
 
-    console.log(startEnd["end"],startEnd["start"])
+    // console.log(startEnd["end"],startEnd["start"])
+    // console.log("the data is")
+    // console.log(data)
 
+    // console.log(editing)
 
 
 
@@ -212,12 +251,12 @@ const AddEmploy = () => {
         <div className='w-[90%] mx-auto ' >
  
             <div className='flex items-center gap-6' style={{marginBottom:"15px"}}>
-                <button className={`bg-blue-500 ${istrue ===true && "bg-blue-900 text-white font-bold"} cursor-pointer rounded-md`} 
+                <button className={`bg-blue-500 ${istrue ===true && "bg-blue-900 text-white font-bold"} text-xs md:text-sm cursor-pointer rounded-md`} 
                 onClick={()=>SetIsTrue(true)}
                 style={{padding:"7px 10px"}}>
                     Search
                 </button>
-                <button className={`bg-blue-500 ${istrue ===false && "bg-blue-900 text-white font-bold"} cursor-pointer  rounded-md`} 
+                <button className={`bg-blue-500 ${istrue ===false && "bg-blue-900 text-white font-bold"} text-xs md:text-sm  cursor-pointer  rounded-md`} 
                   onClick={()=>SetIsTrue(false)}
                 style={{padding:"7px 10px"}}>
                     Add Employe
@@ -260,6 +299,34 @@ const AddEmploy = () => {
                 </form>
              }
 
+
+             {
+               editing !=null ? <form onSubmit={handleUpdate}  name='addEmployeeform' style={{margin:"20px 0px"}}>
+                <div className='flex gap-3 relative '>
+                <input
+                value={inputName}
+                onChange={(e)=>setInputName(e.target.value)}
+                 name="name" className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
+                placeholder='Name'
+                style={{padding:"4px 10px"}}/>
+                <input name="name"
+                 value={inputPositon}
+                 onChange={(e)=>setinputPosition(e.target.value)}
+                className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
+                placeholder='Position'
+                style={{padding:"4px 10px"}}/>
+             
+                   <button 
+                   type='submit'
+                   className=' w-[60%] text-white border-[1px] border-gray-500 rounded-2xl bg-orange-400 hover:bg-orange-500 hover:scale-105 transition-all-[1s] cursor-pointer '>
+                    update
+                </button>
+                </div>
+            </form>:""
+             }
+
+             
+
  
         
 
@@ -269,13 +336,13 @@ const AddEmploy = () => {
                         <table className='w-full text-center table-fixed'>
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
                                 <tr className='border-collapse border-none  rounded-t-2xl'>
-                                    <th className='text-left border-collapse  w-[40%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-xl font-semibold text-gray-300' 
+                                    <th className='text-center border-collapse  w-[40%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-sm font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>S-NO.</th>
-                                    <th className='text-left border-collapse w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-xl font-semibold text-gray-300' 
+                                    <th className='text-left border-collapse w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-sm font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>Name</th>
-                                    <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-xl font-semibold text-gray-300'
+                                    <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-sm font-semibold text-gray-300'
                                     style={{padding:"10px 5px"}}>Position</th>
-                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xl text-sm text-center bg-gray-500  border-b-[1px] border-gray-300 '>
+                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xm text-sm text-center bg-gray-500  border-b-[1px] border-gray-300 '>
                                         Action</th>
                                 </tr>
                             </thead>
@@ -284,17 +351,17 @@ const AddEmploy = () => {
                                 {
                                     data.slice(startEnd["start"],startEnd["end"]).map((ele,index)=>{
                                         return(
-                            <tr key={index} className='border-collapse border-none  rounded-t-2xl'>
-                                    <th className='text-left border-collapse border-b-[1px] border-gray-900    merriweather text-sm font-light text-gray-600' 
+                            <tr key={index} className='border-collapse border-b  rounded-t-2xl'>
+                                    <th className='text-center border-collapse  border-gray-900    merriweather text-sm font-light text-gray-600' 
                                     style={{padding:"10px 5px"}}>{ele.sno+1}</th>
-                                    <th className='text-left border-collapse  border-b-[1px] border-gray-900   merriweather text-sm font-light text-gray-600'
+                                    <th className='text-left border-collapse  border-gray-900   merriweather text-sm font-light text-gray-600'
                                     style={{padding:"10px 5px"}}>
                                         {/* {ele?.name} */}
                                         <input 
                                         readOnly={ele.sno ===editing ? false:true}
                                         value={ele.name} className='w-full outline-none'/>
                                         </th>
-                                    <th className='text-left border- border-b-[1px] border-gray-900   merriweather text-sm font-light text-gray-600'
+                                    <th className='text-left  border-gray-900   merriweather text-sm font-light text-gray-600'
                                     style={{padding:"10px 5px"}}>
                                         {/* {ele?.positoin} */}
 
@@ -303,34 +370,36 @@ const AddEmploy = () => {
                                         value={ele?.positoin} className='w-full outline-none'/>
                                         
                                         </th>
-                                    <th className=' border-b-[1px] w-[100%] md:block  border-gray-900 text-gray-600 text-center text-sm '>
+                                    <th className=' w-[100%] md:block  border-gray-900 text-gray-600 text-center text-sm '>
                                         <div className=' h-full flex md:flex-row justify-center flex-col gap-2' style={{padding:"9px 2px"}}>
                                             {
                                                ele.sno === editing ?  
-                                               <button className='bg-blue-600 w-full   text-white hover:text-black text-[10px] lg:text-sm   rounded-2xl cursor-pointer'
+                                               <button className='bg-blue-300 w-full border border-blue-500  text-black hover:bg-blue-500  text-[8px] lg:text-[10px]   rounded-2xl cursor-pointer'
                                                  onClick={(e)=>setEditing(null)}
-                                                 style={{padding:"2px 9px"}}>
-                                                     cancle</button>:
-                                                     <button className='bg-yellow-600 w-full text-xs lg:text-sm  hover:text-white rounded-2xl cursor-pointer'
-                                        onClick={(e)=>setEditing(ele.sno)}
+                                                 style={{padding:"4px 13px"}}>
+                                                     Cancle</button>:
+                                                     <button className='bg-orange-300 text-black w-full border border-orange-500 text-[8px] lg:text-[10px]  hover:bg-orange-500 rounded-2xl cursor-pointer'
+                                        onClick={(e)=>handleEditing(ele.sno)}
                                         style={{padding:"4px 13px"}}>
-                                            edit</button>
+                                            Edit</button>
                                             }
 
                                       {
-                                        ele.sno !=editing  &&  <button className='bg-red-600 text-xs w-full lg:text-sm  hover:text-white rounded-2xl cursor-pointer'
+                                        ele.sno !=editing  &&  <button className='bg-red-400 border border-red-500 text-xs w-full text-black text-[8px]  lg:text-[10px]  hover:bg-red-500 rounded-2xl cursor-pointer'
                                         onClick={(e)=>handleDelete(ele.sno)}
                                         style={{padding:"4px 13px"}}>
-                                            delet</button>
+                                            Delete</button>
 
                                       }
 
                                        
                                         {
                                             editing === ele.sno && (
-                                                <button className='bg-green-600 w-full   text-white hover:text-black text-[10px] lg:text-sm   rounded-2xl cursor-pointer'
+                                                <button
+                                                onClick={handleUpdate}
+                                                className='bg-green-300 w-full border border-green-500   text-black hover:bg-green-500 text-[8px] lg:text-[10px]   rounded-2xl cursor-pointer'
                                                 style={{padding:"4px 13px"}}>
-                                            save</button>
+                                            Save</button>
                                             )
                                         }
 

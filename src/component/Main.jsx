@@ -66,11 +66,11 @@ const Main = () => {
 
   return (
     <div className='flex justify-center items-center  w-screen h-screen overflow-hidden mx-auto' >
-      <div className=' hidden sm:block w-[200px] md:w-[244px] bg-zinc-900 h-screen'>
+      <div className=' hidden sm:block w-[200px] md:w-[244px] bg-zinc-900 h-screen '>
         <div className='nosifer-bold text-3xl text-white' style={{ paddingTop: "20px", marginLeft: "10px", paddingBottom: "6px" }}>
           panze
         </div>
-        <div className='w-full h-full overflow-auto ' style={{ padding: "10px 0px" }}>
+        <div className='w-full h-full overflow-auto  no-scrollbar' style={{ padding: "10px 0px" }}>
           <LinksTo dashboard={dashboard} headingg={"DASHBOARD"} setActive={setActive} active={active} />
           <LinksTo dashboard={heading} headingg={"ADMISTRATOR"} setActive={setActive} active={active} />
           <LinksTo dashboard={setting} headingg={"SETTING"} setActive={setActive} active={active} />
@@ -86,10 +86,13 @@ const Main = () => {
         <div className='nosifer-bold text-3xl text-white' style={{ paddingTop: "20px", marginLeft: "10px", paddingBottom: "6px" }}>
           panze
         </div>
-        <div className='w-full h-full overflow-auto ' style={{ padding: "10px 0px" }}>
+        <div className='w-full h-full overflow-auto  no-scrollbar ' style={{ padding: "10px 0px" }}>
+         
+
           <LinksTo dashboard={dashboard} headingg={"DASHBOARD"} setActive={setActive} active={active} />
           <LinksTo dashboard={heading} headingg={"ADMISTRATOR"} setActive={setActive} active={active} />
           <LinksTo dashboard={setting} headingg={"SETTING"} setActive={setActive} active={active} />
+
 
 
         </div>
