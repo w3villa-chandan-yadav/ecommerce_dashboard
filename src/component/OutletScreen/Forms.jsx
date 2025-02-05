@@ -7,7 +7,7 @@ const Forms = () => {
     const [active,sestACtive] = useState("Employee");
 
 
-    console.log(active)
+    // console.log(active)
 
   return (
     <div className='w-full h-fit max-w-[1120px] ' style={{padding:"50px 0px"}}>

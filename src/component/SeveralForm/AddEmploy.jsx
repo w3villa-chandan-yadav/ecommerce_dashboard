@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import TableRow from './TableRow';
 
 let datass =[
     {
@@ -85,7 +86,7 @@ let datass =[
 
 const AddEmploy = () => {
 
-    const [datas,setDatas] = useState(datass)
+    const [datas,setDatas] = useState([])
     const [istrue,SetIsTrue] = useState(true);
     const [name,setName] = useState("");
     const [positon,setpositon] =useState("");
@@ -98,9 +99,13 @@ const AddEmploy = () => {
     })
     const [data,setData] = useState(datas);
 
+    // console.log(data)
+
     const [inputName, setInputName] = useState("");
 
     const [inputPositon,setinputPosition] = useState("");
+
+    const [countryy,setCountryy] = useState("")
 
 
 
@@ -149,15 +154,16 @@ const AddEmploy = () => {
             // console.log("searching")
 
             const newData = datas.filter((ele,indexx)=> {
+                console.log(ele.name.first)
                 
-                if(ele.name.toLowerCase().includes(e.target.value.trim().toLowerCase()) || ele.positoin.toLowerCase().includes(e.target.value.trim().toLowerCase())){
-                    // console.log("finding")
+                if(ele.name.first.toLowerCase().includes(e.target.value.trim().toLowerCase()) ){
+                    console.log("finding")
                     return true
                 }
                 
             })
             
-            // console.log(newData)
+            console.log(newData)
             if(currentPage !== 1){
 
                 setCurrnetPage(1)
@@ -192,11 +198,16 @@ const AddEmploy = () => {
     }
 
     const handleEditing =(id)=>{
-     const editable =   datass.find((ele)=>ele.sno === id);
+
+     const editable =   datas.find((ele)=>{
+       return ele?.login?.md5 === id});
+    //  console.log(editable)
 
      setEditing(id)
-     setInputName(editable.name)
-     setinputPosition(editable.positoin)
+     setInputName(editable?.name?.first)
+     console.log('here is the name ,gender and country ' +editable?.name?.first+ " "+ editable?.gender+" "+editable?.location?.country)
+     setinputPosition(editable?.gender)
+     setCountryy(editable?.location?.country)
 
     //  console.log(editable);
 
@@ -208,12 +219,18 @@ const AddEmploy = () => {
         // const index = editing-1;
 
         // console.log("editing", index, editing)
+        // console.log(e)
+        const index = datas.findIndex((ele)=>ele?.login?.md5 === editing)
 
-        console.log(datas[editing])
+        console.log(index);
 
-        datas[editing].name =inputName;
+        console.log(datas[index])
 
-        datas[editing].positoin = inputPositon;
+        datas[index].name.first =inputName;
+        datas[index].gender = inputPositon;
+
+
+        datas[index].location.country = countryy;
 
         setDatas([...datas])
 
@@ -225,6 +242,36 @@ const AddEmploy = () => {
 
     }
 
+
+
+    useEffect(()=>{
+
+       async function getData(){
+            try {
+                const data =await fetch("https://randomuser.me/api/?results=20");
+
+                const result = await data.json();
+
+                // console.log(result.results);
+                setDatas(result.results)
+
+
+                
+            } catch (error) {
+                alert("There is error in server please try after some time")
+            }
+        }
+
+        getData()
+
+
+    },[])
+
+    useEffect(()=>{
+
+        setData(datas)
+
+    },[datas])
 
 
     useEffect(()=>{
@@ -251,17 +298,17 @@ const AddEmploy = () => {
         <div className='w-[90%] mx-auto ' >
  
             <div className='flex items-center gap-6' style={{marginBottom:"15px"}}>
-                <button className={`bg-blue-500 ${istrue ===true && "bg-blue-900 text-white font-bold"} text-xs md:text-sm cursor-pointer rounded-md`} 
+                <button className={`text-black  border border-blue-500 ${istrue ===true && "bg-blue-500 text-white font-bold"} text-xs md:text-sm cursor-pointer rounded-md`} 
                 onClick={()=>SetIsTrue(true)}
                 style={{padding:"7px 10px"}}>
                     Search
                 </button>
-                <button className={`bg-blue-500 ${istrue ===false && "bg-blue-900 text-white font-bold"} text-xs md:text-sm  cursor-pointer  rounded-md`} 
+                <button className={`text-black  border ${istrue ===false && "bg-blue-500 text-white font-bold"} text-xs md:text-sm  cursor-pointer  rounded-md`} 
                   onClick={()=>SetIsTrue(false)}
                 style={{padding:"7px 10px"}}>
                     Add Employe
                 </button>
-            </div>
+               </div>
 
  
 
@@ -292,7 +339,7 @@ const AddEmploy = () => {
                  
                        <button 
                        type='submit'
-                       className=' w-[60%] border-[1px] border-gray-500 rounded-2xl bg-orange-400 hover:bg-orange-500 hover:scale-105 transition-all-[1s] cursor-pointer '>
+                       className=' w-[60%] border-[1px] rounded-2xl   border-orange-400 hover:bg-orange-500 hover:text-white hover:scale-105 transition-all-[1s] cursor-pointer '>
                         Submit
                     </button>
                     </div>
@@ -313,36 +360,40 @@ const AddEmploy = () => {
                  value={inputPositon}
                  onChange={(e)=>setinputPosition(e.target.value)}
                 className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
-                placeholder='Position'
+                placeholder='gender'
+                style={{padding:"4px 10px"}}/>
+
+                <input name="name"
+                 value={countryy}
+                 onChange={(e)=>setCountryy(e.target.value)}
+                className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
+                placeholder='country'
                 style={{padding:"4px 10px"}}/>
              
                    <button 
                    type='submit'
-                   className=' w-[60%] text-white border-[1px] border-gray-500 rounded-2xl bg-orange-400 hover:bg-orange-500 hover:scale-105 transition-all-[1s] cursor-pointer '>
+                   className=' w-[60%] hover:text-white border-[1px] border-orange-500 rounded-2xl text-black hover:bg-orange-500 hover:scale-105 transition-all-[1s] cursor-pointer '>
                     update
                 </button>
                 </div>
             </form>:""
              }
 
-             
-
- 
-        
-
-
-                {data.length > 0 &&
-                    <div className='' style={{margin:"20px 0px "}}>
-                        <table className='w-full text-center table-fixed'>
+                {datas.length > 0 &&
+                    <div className='overflow-x-scroll lg:overflow-hidden ' style={{margin:"20px 0px "}}>
+                        <table className='w-full min-w-[700px] text-center table-fixed  lg:w-full  '>
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
                                 <tr className='border-collapse border-none  rounded-t-2xl'>
-                                    <th className='text-center border-collapse  w-[40%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-sm font-semibold text-gray-300' 
+                                    <th className='text-center border-collapse  w-[60%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-sm font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>S-NO.</th>
-                                    <th className='text-left border-collapse w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-sm font-semibold text-gray-300' 
+                                    <th className='text-left border-collapse w-[60%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-sm font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>Name</th>
-                                    <th className='text-left border- border-b-[1px] w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-sm font-semibold text-gray-300'
-                                    style={{padding:"10px 5px"}}>Position</th>
-                                    <th className='last:rounded-tr-2xl w-[100%]  md:text-xm text-sm text-center bg-gray-500  border-b-[1px] border-gray-300 '>
+                                     <th className='text-left border- border-b-[1px] w-[60%] md:w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-sm font-semibold text-gray-300'
+                                    style={{padding:"10px 5px"}}>Gender</th>
+                                    <th className='text-left border- border-b-[1px] w-[60%] md:w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-sm font-semibold text-gray-300'
+                                    style={{padding:"10px 5px"}}>Country</th>
+
+                                    <th className='last:rounded-tr-2xl w-[60%] md:w-[100%]  md:text-xm text-sm text-center bg-gray-500  border-b-[1px] border-gray-300 '>
                                         Action</th>
                                 </tr>
                             </thead>
@@ -351,70 +402,13 @@ const AddEmploy = () => {
                                 {
                                     data.slice(startEnd["start"],startEnd["end"]).map((ele,index)=>{
                                         return(
-                            <tr key={index} className='border-collapse border-b  rounded-t-2xl'>
-                                    <th className='text-center border-collapse  border-gray-900    merriweather text-sm font-light text-gray-600' 
-                                    style={{padding:"10px 5px"}}>{ele.sno+1}</th>
-                                    <th className='text-left border-collapse  border-gray-900   merriweather text-sm font-light text-gray-600'
-                                    style={{padding:"10px 5px"}}>
-                                        {/* {ele?.name} */}
-                                        <input 
-                                        readOnly={ele.sno ===editing ? false:true}
-                                        value={ele.name} className='w-full outline-none'/>
-                                        </th>
-                                    <th className='text-left  border-gray-900   merriweather text-sm font-light text-gray-600'
-                                    style={{padding:"10px 5px"}}>
-                                        {/* {ele?.positoin} */}
-
-                                        <input 
-                                        readOnly={ele.sno ===editing ? false:true}
-                                        value={ele?.positoin} className='w-full outline-none'/>
-                                        
-                                        </th>
-                                    <th className=' w-[100%] md:block  border-gray-900 text-gray-600 text-center text-sm '>
-                                        <div className=' h-full flex md:flex-row justify-center flex-col gap-2' style={{padding:"9px 2px"}}>
-                                            {
-                                               ele.sno === editing ?  
-                                               <button className='bg-blue-300 w-full border border-blue-500  text-black hover:bg-blue-500  text-[8px] lg:text-[10px]   rounded-2xl cursor-pointer'
-                                                 onClick={(e)=>setEditing(null)}
-                                                 style={{padding:"4px 13px"}}>
-                                                     Cancle</button>:
-                                                     <button className='bg-orange-300 text-black w-full border border-orange-500 text-[8px] lg:text-[10px]  hover:bg-orange-500 rounded-2xl cursor-pointer'
-                                        onClick={(e)=>handleEditing(ele.sno)}
-                                        style={{padding:"4px 13px"}}>
-                                            Edit</button>
-                                            }
-
-                                      {
-                                        ele.sno !=editing  &&  <button className='bg-red-400 border border-red-500 text-xs w-full text-black text-[8px]  lg:text-[10px]  hover:bg-red-500 rounded-2xl cursor-pointer'
-                                        onClick={(e)=>handleDelete(ele.sno)}
-                                        style={{padding:"4px 13px"}}>
-                                            Delete</button>
-
-                                      }
-
-                                       
-                                        {
-                                            editing === ele.sno && (
-                                                <button
-                                                onClick={handleUpdate}
-                                                className='bg-green-300 w-full border border-green-500   text-black hover:bg-green-500 text-[8px] lg:text-[10px]   rounded-2xl cursor-pointer'
-                                                style={{padding:"4px 13px"}}>
-                                            Save</button>
-                                            )
-                                        }
-
-                                        </div>
-                                        </th>
-                                </tr>
-
+                                            <TableRow  key={index}   ele={ele}  editing={editing} setEditing={setEditing}  handleEditing={handleEditing} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+                            
                                         )
                                     })
-                                }
-                                
-
+                                }                            
                             </tbody>
-                        </table>
-                        
+                        </table>                        
                      {   data.length > 4 && <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
                          {
                            currentPage >1 &&<>  <button
@@ -427,16 +421,10 @@ const AddEmploy = () => {
                              className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
                                prev
                              </button>
-                             </>
-                             
-                            
-                         }
-                         
-                         
-                        
+                             </>                                                         
+                         }                                                                          
                         {
-                           Math.ceil(data.length/4)>currentPage && <> 
-                           
+                           Math.ceil(data.length/4)>currentPage && <>                            
                            <button
                           onClick={(e)=>handeleChange(currentPage+1)}
                           className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
@@ -444,24 +432,17 @@ const AddEmploy = () => {
                           </button> <button
                               onClick={(e)=>handeleChange(Math.ceil(data.length/4))}
                               className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500 ' style={{padding:"8px 10px"}}>
-                                <FaAngleDoubleRight/>
-                              
+                                <FaAngleDoubleRight/>                              
                               </button>
-
                               </>
                         }
-
                         </div>
                         }
-
-
                     </div>
 }
-
-
-        </div>
-               
-              
+        </div>     
+        
+                         
             </section>
   )
 }
