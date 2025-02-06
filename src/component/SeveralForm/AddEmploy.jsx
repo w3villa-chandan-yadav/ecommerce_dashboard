@@ -150,7 +150,7 @@ const AddEmploy = () => {
         //  datas.push(newdataIs)
         setDatas([...datas,newdataIs])
         //  data.push(newdataIs)
-        console.log("added")
+        // console.log("added")
         setData([...data,newdataIs])
           
         //  setData([...data,newdataIs])
@@ -190,7 +190,7 @@ const AddEmploy = () => {
             // console.log(newData)
             if(currentPage.current !== 1){
 
-                setCurrnetPage({...currentPage,current:1})
+                setCurrnetPage({prevoius:0,current:1,next:2})
             }
             setData(newData)
             
@@ -200,7 +200,7 @@ const AddEmploy = () => {
 
 
     const handeleChange=(toDo)=>{
-        // console.log(toDo)
+        console.log(toDo)   
         if(toDo === currentPage.current || toDo === currentPage.current ){
             // console.log("u are at your detination page")
             return
@@ -327,11 +327,9 @@ const AddEmploy = () => {
                 </button>
                </div>
 
- 
-
 
              {
-                istrue ?     <div>
+                istrue ? <div>
                 <input type='text' placeholder='Degination/Name'
                 value={search}
                 onChange={handelSearch}
