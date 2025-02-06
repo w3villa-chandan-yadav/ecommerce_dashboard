@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useMemo} from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import TableRow from './TableRow';
+import { use } from 'react';
 
 let datass =[
     {
@@ -84,22 +85,31 @@ let datass =[
 
 
 
+
 const AddEmploy = () => {
+
 
     const [datas,setDatas] = useState([])
     const [istrue,SetIsTrue] = useState(true);
     const [name,setName] = useState("");
     const [positon,setpositon] =useState("");
+    const [counties,setCountries] = useState("")
     const [editing,setEditing] =useState(null);
     const [search ,setsearch] =useState("");
-    const [currentPage,setCurrnetPage] = useState(1);
+    const [currentPage,setCurrnetPage] = useState({
+        prevoius:0,
+        current:1,
+        next:2
+    });
     const [startEnd,setStartEnd] = useState({
-        start:4*(currentPage-1),
-        end: 4* currentPage
+        start:4*(currentPage.current-1),
+        end: 4* currentPage.current
     })
     const [data,setData] = useState(datas);
 
     // console.log(data)
+    const [numberofData,setNumberOfData]  = useState(0)
+    // console.log(numberofData)
 
     const [inputName, setInputName] = useState("");
 
@@ -119,22 +129,36 @@ const AddEmploy = () => {
     const addEmploye=(e)=>{
         e.preventDefault();
         // console.log(data)
-        if(name.length <3 || positon.length <5 ){
+        if(name.length <3 || positon.length <3 ){
             alert("please fill correct details")
             return
         }
-        const newdataIs ={sno:data.at(-1).sno+1,
-            name:name,
-            positoin:positon
+
+        const newdataIs ={id:{
+            value:Math.random(),
+        },
+            name:{first:name},
+            gender:positon,
+            location:{
+                country:counties
+            },
+            login:{
+                md5:Math.random()
+            }
          }
    
-         datas.push(newdataIs)
+        //  datas.push(newdataIs)
+        setDatas([...datas,newdataIs])
+        //  data.push(newdataIs)
+        console.log("added")
+        setData([...data,newdataIs])
           
-         setData([...data,newdataIs])
+        //  setData([...data,newdataIs])
          alert("employee Added successufy")
 
          setName("");
          setpositon("");
+         setCountries("")
 
     }
 
@@ -163,10 +187,10 @@ const AddEmploy = () => {
                 
             })
             
-            console.log(newData)
-            if(currentPage !== 1){
+            // console.log(newData)
+            if(currentPage.current !== 1){
 
-                setCurrnetPage(1)
+                setCurrnetPage({...currentPage,current:1})
             }
             setData(newData)
             
@@ -174,22 +198,38 @@ const AddEmploy = () => {
     }
 
 
+
     const handeleChange=(toDo)=>{
         // console.log(toDo)
+        if(toDo === currentPage.current || toDo === currentPage.current ){
+            // console.log("u are at your detination page")
+            return
+        }
 
-        setCurrnetPage(toDo)
+        if(toDo < 1 ){
+            return 
+        }
+
+        setCurrnetPage({
+            prevoius:toDo-1,
+            current:toDo,
+            next:toDo+1
+        })
     }
+
+    // console.log(currentPage)
 
 
     const handleDelete =(id)=>{
          
         // console.log("delete",id)
-        const newData = datas.filter((ele)=>ele.sno !=id);
+        const newData = datas.filter((ele)=>ele.login.md5 !=id);
         setDatas(newData);
 
         // console.log(newData)
 
-        const updatedData = data.filter((ele)=>ele.sno != id);
+        const updatedData = data.filter((ele)=>ele.login.md5 != id);
+        // console.log(updatedData)
 
         setData(updatedData);
 
@@ -216,15 +256,14 @@ const AddEmploy = () => {
     const handleUpdate =(e)=>{
         e.preventDefault();
 
-        // const index = editing-1;
 
         // console.log("editing", index, editing)
         // console.log(e)
         const index = datas.findIndex((ele)=>ele?.login?.md5 === editing)
 
-        console.log(index);
+        // console.log(index);
 
-        console.log(datas[index])
+        // console.log(datas[index])
 
         datas[index].name.first =inputName;
         datas[index].gender = inputPositon;
@@ -236,13 +275,7 @@ const AddEmploy = () => {
 
         setEditing(null)
 
-
-    
-
-
     }
-
-
 
     useEffect(()=>{
 
@@ -254,11 +287,12 @@ const AddEmploy = () => {
 
                 // console.log(result.results);
                 setDatas(result.results)
+                setData(result.results)
 
 
                 
             } catch (error) {
-                alert("There is error in server please try after some time")
+                alert("There is error in server please try after some timee")
             }
         }
 
@@ -268,31 +302,14 @@ const AddEmploy = () => {
     },[])
 
     useEffect(()=>{
-
-        setData(datas)
-
-    },[datas])
-
-
-    useEffect(()=>{
  
         setStartEnd({
-            start:4*(currentPage-1),
-            end: 4* currentPage
+            start:4*(currentPage.current-1),
+            end: 4* currentPage.current
         })
-
 
     },[currentPage])
 
-    // console.log(startEnd["end"],startEnd["start"])
-    // console.log("the data is")
-    // console.log(data)
-
-    // console.log(editing)
-
-
-
-    
   return (
     <section className='w-full       ' style={{padding:"15px 0px"}} >
         <div className='w-[90%] mx-auto ' >
@@ -323,7 +340,7 @@ const AddEmploy = () => {
                 />
             </div> :
                 <form onSubmit={addEmploye}  name='addEmployeeform'>
-                    <div className='flex gap-3 relative '>
+                    <div className='md:flex grid grid-cols-2 gap-3 relative '>
                     <input
                     value={name}
                     onChange={(e)=>setName(e.target.value)}
@@ -334,12 +351,18 @@ const AddEmploy = () => {
                      value={positon}
                      onChange={(e)=>setpositon(e.target.value)}
                     className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
-                    placeholder='Position'
+                    placeholder='gender'
+                    style={{padding:"4px 10px"}}/>
+                    <input name="name"
+                    value={counties}
+                    onChange={(e)=>setCountries(e.target.value)}
+                    className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
+                    placeholder='country'
                     style={{padding:"4px 10px"}}/>
                  
                        <button 
                        type='submit'
-                       className=' w-[60%] border-[1px] rounded-2xl   border-orange-400 hover:bg-orange-500 hover:text-white hover:scale-105 transition-all-[1s] cursor-pointer '>
+                       className=' w-full md:w-[60%] border-[1px] rounded-2xl   border-orange-400 hover:bg-orange-500 hover:text-white hover:scale-105 transition-all-[1s] cursor-pointer '>
                         Submit
                     </button>
                     </div>
@@ -385,7 +408,7 @@ const AddEmploy = () => {
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
                                 <tr className='border-collapse border-none  rounded-t-2xl'>
                                     <th className='text-center border-collapse  w-[60%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-sm font-semibold text-gray-300' 
-                                    style={{padding:"10px 5px"}}>S-NO.</th>
+                                    style={{padding:"10px 5px"}}>UUId</th>
                                     <th className='text-left border-collapse w-[60%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 merriweather text-sm md:text-sm font-semibold text-gray-300' 
                                     style={{padding:"10px 5px"}}>Name</th>
                                      <th className='text-left border- border-b-[1px] w-[60%] md:w-[100%] border-gray-300  bg-gray-500  merriweather text-sm md:text-sm font-semibold text-gray-300'
@@ -399,43 +422,74 @@ const AddEmploy = () => {
                             </thead>
                             <tbody>
 
-                                {
+                                {/* {
                                     data.slice(startEnd["start"],startEnd["end"]).map((ele,index)=>{
                                         return(
-                                            <TableRow  key={index}   ele={ele}  editing={editing} setEditing={setEditing}  handleEditing={handleEditing} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+                                            <TableRow  key={index}  inde={index}  ele={ele}  editing={editing} setEditing={setEditing}  handleEditing={handleEditing} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
                             
                                         )
                                     })
-                                }                            
+                                }       */}
+
+                                { 
+                                    data.map((ele,index)=>{
+                                        const totalData = data.slice(startEnd["start"],startEnd["end"])
+                                            // console.log(totalData.length)
+                                            if(totalData.length < 1){
+                                                handeleChange(currentPage.current -1)
+                                            }
+                                       
+                                        if(index>=startEnd["start"] && index < startEnd["end"]){
+                                            
+                                            
+                                               return <TableRow  key={index}  inde={index}  ele={ele}  editing={editing} setEditing={setEditing}  handleEditing={handleEditing} handleUpdate={handleUpdate} handleDelete={handleDelete}/>
+
+                                        }
+                                    })
+                                }                      
                             </tbody>
                         </table>                        
                      {   data.length > 4 && <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
                          {
-                           currentPage >1 &&<>  <button
+                           <>  <button
                              onClick={()=>handeleChange(1)}
                              className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"8px 10px"}}>
                              <FaAngleDoubleLeft/>
                              </button>
-                              <button 
-                              onClick={(e)=>handeleChange(currentPage-1)}
+                            { currentPage.current >1 && <button 
+                              onClick={(e)=>handeleChange(currentPage.current-1)}
                              className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
-                               prev
-                             </button>
+                               {currentPage.prevoius}
+                             </button>}
                              </>                                                         
-                         }                                                                          
+                         } 
+                          <button 
+                            //   onClick={(e)=>handeleChange(currentPage.current-1)}
+                             className='bg-orange-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
+                               {currentPage.current}
+                             </button>
+                           {  Math.ceil(data.length/4) >=currentPage.next && <button 
+                              onClick={(e)=>handeleChange(currentPage.current+1)}
+                             className='bg-gray-400 rounded-md  flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
+                               {currentPage.next} 
+                             </button>
+                             }
+
+
                         {
                            Math.ceil(data.length/4)>currentPage && <>                            
                            <button
-                          onClick={(e)=>handeleChange(currentPage+1)}
+                          onClick={(e)=>handeleChange(currentPage.current+1)}
                           className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500' style={{padding:"3px 10px"}}>
                             next
-                          </button> <button
+                          </button> 
+                              </>
+                        }
+                        <button
                               onClick={(e)=>handeleChange(Math.ceil(data.length/4))}
                               className='bg-gray-400 rounded-md flex-1 cursor-pointer hover:bg-gray-500 ' style={{padding:"8px 10px"}}>
                                 <FaAngleDoubleRight/>                              
                               </button>
-                              </>
-                        }
                         </div>
                         }
                     </div>

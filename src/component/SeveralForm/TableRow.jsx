@@ -1,13 +1,14 @@
 import React,{memo} from 'react';
 
-const TableRow = ({ele,editing,setEditing,handleEditing,handleDelete,handleUpdate}) => {
+const TableRow = ({ele,editing,inde,setEditing,handleEditing,handleDelete,handleUpdate}) => {
+    // console.log("reee")  
   return (
     <tr  className='border-collapse border-b rounded-t-2xl'>
                                     <th className='text-center border-collapse  border-gray-900  merriweather text-sm font-light text-gray-600' 
                                     style={{padding:"10px 5px"}}>
                                         {/* {ele.sno+1} */}
                                         {
-                                            ele.id.value ? ele.id.value :Math.random(3)
+                                            inde+1
                                         }
                                         </th>
                                     <th className='text-left border-collapse  border-gray-900 merriweather text-sm font-light text-gray-600'
