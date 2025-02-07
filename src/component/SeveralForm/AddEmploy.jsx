@@ -322,8 +322,8 @@ const AddEmploy = () => {
     },[currentPage])
 
   return (
-    <section className='w-full       ' style={{padding:"15px 0px"}} >
-        <div className='w-[90%] mx-auto ' >
+    <section className='w-full '  style={{padding:"15px 0px"}} >
+        <div className='w-[90%] mx-auto  ' >
  
             <div className='flex items-center gap-6' style={{marginBottom:"15px"}}>
                 <button className={`text-black  border border-blue-500 ${istrue ===true && "bg-blue-500 text-white font-bold"} text-xs md:text-sm cursor-pointer rounded-md`} 
@@ -348,12 +348,18 @@ const AddEmploy = () => {
                 style={{padding:"6px 5px"}}
                 />
             </div> :
-                <form onSubmit={addEmploye}  name='addEmployeeform'>
-                    <div className='md:flex grid grid-cols-2 gap-3 relative '>
+            <div  className='absolute inset-0 z-50 grid place-items-center   w-full h-full backdrop-blur-[7px]'>
+                <form onSubmit={addEmploye}  name='addEmployeeform' className={`bgWhite ${istrue ? "top-[-200px]":"top-[0px]"} transition-all duration-300 ease- relative rounded-2xl backdrop-blur-[7px] `} style={{padding:"42px 18px"}}>
+                    <div 
+                    onClick={()=>SetIsTrue(true)}
+                    className='absolute  cursor-pointer text-center text-white bg-black rounded-full w-[30px] h-[30px] right-[20px] top-[3px]' style={{padding:"2px 5px"}}>
+                        x
+                    </div>
+                    <div className='md:flex md:flex-col grid grid-cols-1 gap-3 relative '>
                     <input
                     value={name}
                     onChange={(e)=>setName(e.target.value)}
-                     name="name" className='block outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
+                     name="name" className='block text-gray-600 outline-none border-[1px] w-[100%] border-gray-700 rounded-[10px] '
                     placeholder='Name'
                     style={{padding:"4px 10px"}}/>
                     <input name="name"
@@ -371,11 +377,12 @@ const AddEmploy = () => {
                  
                        <button 
                        type='submit'
-                       className=' w-full md:w-[60%] border-[1px] rounded-2xl   border-orange-400 hover:bg-orange-500 hover:text-white hover:scale-105 transition-all-[1s] cursor-pointer '>
+                       className=' w-full md:w-[100%] border-[1px] rounded-2xl   border-orange-400 hover:bg-orange-500 hover:text-white hover:scale-105 transition-all-[1s] cursor-pointer '>
                         Submit
                     </button>
                     </div>
                 </form>
+                </div>
              }
 
 
@@ -416,8 +423,8 @@ const AddEmploy = () => {
             
 
                 {datas.length > 0?
-                    <div className='overflow-x-scroll lg:overflow-hidden ' style={{margin:"20px 0px "}}>
-                        <table className='w-full min-w-[700px] text-center table-fixed  lg:w-full  '>
+                    <div className='overflow-x-scroll lg:overflow-hidden w-full ' style={{margin:"20px 0px "}}>
+                        <table className='w-full min-w-[480px] text-center table-fixed  lg:w-full  '>
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
                                 <tr className='border-collapse border-none  rounded-t-2xl'>
                                     <th className='text-center border-collapse  w-[60%] md:w-[100%] border-b-[1px] border-gray-300  bg-gray-500 first:rounded-tl-2xl merriweather text-xs md:text-sm font-semibold text-gray-300' 
@@ -457,7 +464,20 @@ const AddEmploy = () => {
                                 }                      
                             </tbody>
                         </table>                        
-                     {   data.length > 4 && <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
+                                
+                    </div>
+                    : (<div className='w-full grid place-items-center'>
+                        <img src={loadingImage} alt='loading image' className='w-[180px] h-[180px]'/>
+ 
+               </div>)
+
+
+
+               
+
+               
+}
+        {   data.length > 4 && <div className='bg-gray-600 h-[40px] w-fit flex justify-center items-center gap-3 rounded-md ' style={{padding:"2px 6px",margin:"10px auto "}} >
                          {
                            <>  <button
                              onClick={()=>handeleChange(1)}
@@ -500,12 +520,8 @@ const AddEmploy = () => {
                               </button>
                         </div>
                         }
-                    </div>
-                    : <div className='w-full grid place-items-center'>
-                        <img src={loadingImage} alt='loading image' className='w-[180px] h-[180px]'/>
- 
-               </div>
-}
+
+
         </div>     
         
                          

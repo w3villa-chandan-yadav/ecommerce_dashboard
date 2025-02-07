@@ -10,7 +10,9 @@ const Forms = () => {
     // console.log(active)
 
   return (
-    <div className='w-full h-fit max-w-[1120px] ' style={{padding:"50px 0px"}}>
+    // <div className='w-full h-fit max-w-[1480px] ' style={{padding:"50px 0px"}}>
+    <div className=' w-[97%] h-[99%] max-w-[1400px]   mx-auto custom-paddinginner'>
+
         {/* <div className='w-full h-[40%] absolute bg-gray-600' style={{marginTop:"-30px"}}>
 
         </div> */}  
