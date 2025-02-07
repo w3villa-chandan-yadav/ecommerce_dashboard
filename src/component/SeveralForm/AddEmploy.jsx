@@ -2,7 +2,7 @@ import React, { useEffect, useState ,useMemo} from 'react'
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import TableRow from './TableRow';
-import { use } from 'react';
+import loadingImage from "../../assets/pendulum.gif"
 
 let datass =[
     {
@@ -399,8 +399,12 @@ const AddEmploy = () => {
                 </div>
             </form>:""
              }
+             
 
-                {datas.length > 0 &&
+
+            
+
+                {datas.length > 0?
                     <div className='overflow-x-scroll lg:overflow-hidden ' style={{margin:"20px 0px "}}>
                         <table className='w-full min-w-[700px] text-center table-fixed  lg:w-full  '>
                             <thead className=' border-collapse  border-none' style={{padding:"10px 5px"}}>
@@ -491,6 +495,10 @@ const AddEmploy = () => {
                         </div>
                         }
                     </div>
+                    : <div className='w-full grid place-items-center'>
+                        <img src={loadingImage} alt='loading image' className='w-[180px] h-[180px]'/>
+ 
+               </div>
 }
         </div>     
         
