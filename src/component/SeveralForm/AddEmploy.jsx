@@ -217,7 +217,7 @@ const AddEmploy = () => {
         })
     }
 
-    // console.log(currentPage)
+    console.log(currentPage)
 
 
     const handleDelete =(id)=>{
@@ -302,7 +302,18 @@ const AddEmploy = () => {
     },[])
 
     useEffect(()=>{
+       
+        const totalData = data.slice(startEnd["start"],startEnd["end"])
+        // console.log(totalData.length)
+        if(totalData.length < 1){
+            handeleChange(currentPage.current-1)
+        }
+        
+    },[data])
+
+    useEffect(()=>{
  
+        console.log("run for changing slice")
         setStartEnd({
             start:4*(currentPage.current-1),
             end: 4* currentPage.current
@@ -435,11 +446,6 @@ const AddEmploy = () => {
 
                                 { 
                                     data.map((ele,index)=>{
-                                        const totalData = data.slice(startEnd["start"],startEnd["end"])
-                                            // console.log(totalData.length)
-                                            if(totalData.length < 1){
-                                                handeleChange(currentPage.current -1)
-                                            }
                                        
                                         if(index>=startEnd["start"] && index < startEnd["end"]){
                                             
